@@ -204,6 +204,26 @@ var _DateDaxExpression = @"-- Reference date for the latest date in the report
         BLANK()
         ) 
         ,
+        
+         ""BMTD"" , 
+                           SWITCH(
+        TRUE(),
+        -- Current Month Till Date
+        [Calendar Year Month] = _RefMonth &&
+        [Date] <= _Refdate,""CMTD"",
+
+        -- Same Month Previous Year Till Date
+        [Calendar Year Month] = (_RefMonth - 100) &&
+        [Date] <= DATE(YEAR(_Refdate) - 1, MONTH(_Refdate), DAY(_Refdate)),""LYMTD"",
+
+        -- Previous Month Till Date
+        [Calendar Year Month] = (_RefMonth - 1) &&
+        [Date] <= DATE(YEAR(_Refdate), MONTH(_Refdate) - 1, DAY(_Refdate)),""PMTD"",
+
+        -- Default case
+        BLANK()
+        ) 
+        ,
                ""BYTD"",
     SWITCH(
         TRUE(),
@@ -220,9 +240,9 @@ var _DateDaxExpression = @"-- Reference date for the latest date in the report
         -- Default case
         BLANK()
     )
-,
 
-      ""WTD"",
+  
+,      ""WTD"",
     SWITCH(
         TRUE(),
         -- Current Week Till Date

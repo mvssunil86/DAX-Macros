@@ -50,6 +50,12 @@ string tablename = "Calendar";
                     c.DisplayFolder = "8.TillDate";
                      c.IsHidden = false;
                 }
+                     if ( c.Name == "BMTD" )
+                {
+                c.DisplayFolder = "8.TillDate";
+                c.IsHidden = false;
+                }   
+                 
             
                          if ( c.Name == "WTD" )
                 {

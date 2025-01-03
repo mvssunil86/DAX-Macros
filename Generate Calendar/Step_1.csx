@@ -218,8 +218,8 @@ var _DateDaxExpression = @"-- Reference date for the latest date in the report
         [Date] <= DATE(YEAR(_Refdate) - 1, MONTH(_Refdate), DAY(_Refdate)),""LYMTD"",
 
         -- Previous Month Till Date
-        [Calendar Year Month] = (_RefMonth - 1) &&
-        [Date] <= DATE(YEAR(_Refdate), MONTH(_Refdate) - 1, DAY(_Refdate)),""PMTD"",
+        [Calendar Year Month] =  SWITCH(MONTH(_Refdate) , 1 , (year(_Refdate)-1 )*100+ 12 ,  (_RefMonth - 1)) &&
+        [Date] <= DATE(SWITCH(MONTH(_Refdate) , 1 , (year(_Refdate)-1 ) ,year(_Refdate) ), SWITCH(MONTH(_Refdate) , 1 , 12 ,  (_RefMonth - 1)), DAY(_Refdate)),""PMTD"",
 
         -- Default case
         BLANK()

@@ -197,9 +197,10 @@ var _DateDaxExpression = @"-- Reference date for the latest date in the report
         [Date] <= DATE(YEAR(_Refdate) - 1, MONTH(_Refdate), DAY(_Refdate)),""LYQTD"",
 
         -- Previous Quarter Till Date
-        [Calendar Year Quarter] = (_RefQuarter - 1) &&
-        [Date] <= DATE(YEAR(_Refdate), MONTH(_Refdate) - 3, DAY(_Refdate)),""PQTD"",
+        [Calendar Year Quarter] =  SWITCH(QUARTER(_Refdate),1,year(_Refdate)-1,YEAR(_Refdate))    * 100 + (SWITCH(QUARTER(_Refdate),1,4,_RefQuarter - 1))          &&
+        [Date] <= DATE(SWITCH(QUARTER(_Refdate),1,year(_Refdate)-1,YEAR(_Refdate))  , SWITCH(MONTH(_Refdate),1,10,2,11,3,12,MONTH(_Refdate)-3), DAY(_Refdate)),""PQTD"",
 
+        
         -- Default case
         BLANK()
         ) 

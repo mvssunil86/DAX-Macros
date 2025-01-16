@@ -1,0 +1,42 @@
+// Creates Time based Trend measures for every selected measure with seperate folder within main folder of base measure.
+foreach(var m in Selected.Measures) {
+        
+    
+     var MoMDelta = m.Table.AddMeasure(
+     m.Name + " MoM% Trend" , 
+       
+     "\n"+"Var Prev_Mom = " +"CALCULATE(" + m.DaxObjectName + ", DATEADD('Calendar'[Date], -1, MONTH) )"
+     + "\n" +"Var Current_Mom = "   + m.DaxObjectName +"\n"
+    +  "return IF( NOT(isblank(Current_Mom)) , divide(Current_Mom-Prev_Mom , Prev_Mom) ,blank()    )", // DAX expression
+    m.DisplayFolder + "\\" +m.DisplayFolder+" "+"Trend"  );
+     MoMDelta.FormatString = "Percent";
+     MoMDelta.Description = "Month on Month growth Percentage trend" + m.Name;
+    
+    
+    
+    var QoQDelta = m.Table.AddMeasure(
+    m.Name + " QoQ% Trend" , 
+       
+    "\n"+"Var Prev_Quarter = " +"CALCULATE(" + m.DaxObjectName + ", DATEADD('Calendar'[Date], -1, QUARTER) )"
+    + "\n" +"Var Current_Quarter = "   + m.DaxObjectName +"\n"
+    +  "return IF( NOT(isblank(Current_Quarter)) , divide(Current_Quarter-Prev_Quarter , Prev_Quarter) ,blank()    )", // DAX expression
+    m.DisplayFolder + "\\" +m.DisplayFolder+" "+"Trend"  );
+     QoQDelta.FormatString = "Percent";
+     QoQDelta.Description = "Quarter on Quarter growth Percentage trend" + m.Name;
+     
+     
+     
+     var YoYDelta = m.Table.AddMeasure(
+     m.Name + " YoY% Trend" , 
+       
+     "\n"+"Var Prev_Quarter = " +"CALCULATE(" + m.DaxObjectName + ", DATEADD('Calendar'[Date], -4, QUARTER) )"
+    + "\n" +"Var Current_Quarter = "   + m.DaxObjectName +"\n"
+    +  "return IF( NOT(isblank(Current_Quarter)) , divide(Current_Quarter-Prev_Quarter , Prev_Quarter) ,blank()    )", // DAX expression
+    m.DisplayFolder + "\\" +m.DisplayFolder+" "+"Trend"   );
+     YoYDelta.FormatString = "Percent";
+     YoYDelta.Description = "Year on Year growth Percentage trend" + m.Name;
+     
+     
+     
+     
+}

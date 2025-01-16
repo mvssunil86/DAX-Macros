@@ -51,16 +51,12 @@ foreach(var m in Selected.Measures) {
      m.Name + " YTD YoY% Trend" , 
        
      "\n"+"Var LYYTD = "  +"CALCULATE("+"CALCULATE(" + m.DaxObjectName + ", Calendar[BYTD] = \"LYYTD\")"+" ,ALL('Calendar'))"+"\n"
-     +"\n"+"Var CYYTD = "  +"CALCULATE("+"CALCULATE(" + m.DaxObjectName + ", Calendar[BYTD] = \"CYYTD\")"+" ,ALL('Calendar'))"+"\n"
+     +"\n"+"Var CYYTD = "  +"CALCULATE("+"CALCULATE(" + m.DaxObjectName + ", Calendar[BYTD] = \"CYTD\")"+" ,ALL('Calendar'))"+"\n"
      +"\n"+"Var Prev_YoY = " +"IF(MAX('Calendar'[YearLag]) = 0 , LYYTD  ,"+"CALCULATE(" + m.DaxObjectName + ", DATEADD('Calendar'[Date], -1, Year) ))"
      + "\n" +"Var Current_YoY = "   + "IF(MAX('Calendar'[YearLag]) = 0 , CYYTD ,"+m.DaxObjectName +")"+"\n"
          +  "return IF( (isblank("+ m.DaxObjectName +")) , blank(),divide(Current_YoY-Prev_YoY , Prev_YoY)      )" ,
 
     m.DisplayFolder + "\\" +m.DisplayFolder+" "+"Trend"   );
-     YoYDelta.FormatString = "Percent";
-     YoYDelta.Description = "Year on Year YTD growth Percentage trend" + m.Name;
-     
-     
-     
-     
-}
+     YTDDelta.FormatString = "Percent";
+     YTDDelta.Description = "Year on Year YTD growth Percentage trend" + m.Name;
+     }

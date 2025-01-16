@@ -241,8 +241,17 @@ var _DateDaxExpression = @"-- Reference date for the latest date in the report
         -- Default case
         BLANK()
     )
-
-  
+    ,
+    
+    ""Monthlag"",
+    DATEDIFF( [Date],TODAY()-1, MONTH)
+ ,
+""Quarterlag"",
+    DATEDIFF( [Date],TODAY()-1, Quarter) 
+,
+""Yearlag"",
+    DATEDIFF( [Date],TODAY()-1, Year)    
+    
 ,      ""WTD"",
     SWITCH(
         TRUE(),
@@ -273,5 +282,4 @@ var _DateDaxExpression = @"-- Reference date for the latest date in the report
 Model.AddCalculatedTable("Date",_DateDaxExpression);
         
         
-
 

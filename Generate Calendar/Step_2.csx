@@ -26,6 +26,7 @@ string tablename = "Calendar";
         // Sort Years
 (Model.Tables["Date"].Columns["Calendar Year"] as CalculatedTableColumn).SortByColumn = (Model.Tables["Date"].Columns["Calendar Year Number"] as CalculatedTableColumn);
 
+
 // For all the columns in the date table:
         foreach (var c in Model.Tables["Date"].Columns )
         {
@@ -93,6 +94,12 @@ string tablename = "Calendar";
                  c.DisplayFolder = "2. Quarter";
                  c.IsHidden = false;
                 }
+              if ( c.Name.Contains("lag") & c.DataType != DataType.Boolean )
+                {
+                    c.DisplayFolder = "9. Lag";
+                 c.IsHidden = false;
+                }
+             
         
         }
  
